@@ -1,4 +1,9 @@
+from hashlib import md5
+from datetime import datetime
+
 from werkzeug.datastructures import FileStorage, ImmutableMultiDict
+
+from ..util.keydb import keydb
 
 
 def upload_files(files: ImmutableMultiDict[str, FileStorage]):
@@ -6,9 +11,23 @@ def upload_files(files: ImmutableMultiDict[str, FileStorage]):
 
     for name, file in _files:
         filename = file.filename
-        print(name)
-        print(filename)
 
         file.save(f"/tmp/{filename}")
 
-        print("saved")
+        with open(f"/tmp/{filename}", "rb") as f:
+            mdhash = md5(f.read()).hexdigest()
+
+        print(mdhash)
+
+        if keydb.hgetall(mdhash):
+            print("file already indexed")
+        else:
+            keydb.hset(
+                mdhash,
+                mapping={
+                    "filename": name,
+                    "created_at": str(datetime.now()),
+                },
+            )
+
+            print("saved")

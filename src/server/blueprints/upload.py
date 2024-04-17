@@ -8,6 +8,8 @@ bp = Blueprint("upload", __name__)
 @bp.route("/upload", methods=["POST"])
 def upload():
     if request.method == "POST":
-        upload_files(request.files)
+        files = request.files
+        # TODO: vulnerability?
+        upload_files(files)
 
     return []
