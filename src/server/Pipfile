@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-cors = "*"
-redis = "*"
+geepeetee = {file = "../modules", editable = true}
 python-dotenv = "*"
 
 [dev-packages]

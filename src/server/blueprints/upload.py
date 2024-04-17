@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from ..service.upload_service import upload_files
+from ..services.upload_service import upload_files
 
 bp = Blueprint("upload", __name__)
 

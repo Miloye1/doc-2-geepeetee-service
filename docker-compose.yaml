@@ -7,15 +7,6 @@ services:
       dockerfile: ./src/server/dockerfile
     ports:
       - "5000:5000"
-    develop:
-      watch:
-        - action: sync
-          path: ./src/server
-          target: /app
-          ignore:
-            - dev/
-        - action: rebuild
-          path: ./requirements.txt
   keydb:
     image: eqalpha/keydb
     ports:
